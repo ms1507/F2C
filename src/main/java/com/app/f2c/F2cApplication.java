@@ -8,6 +8,7 @@ public class F2cApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(F2cApplication.class, args);
+		System.out.println("Started..");
 	}
 
 }
