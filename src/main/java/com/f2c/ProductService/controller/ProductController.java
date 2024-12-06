@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/f2c/users")
+@RequestMapping("/f2c/products")
 public class ProductController {
     // Add product related RESTful API endpoints here
     // For example, getProductById, getAllProducts, createProduct, updateProduct, deleteProduct
@@ -42,8 +42,8 @@ public class ProductController {
     }
 
     @GetMapping("/product/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long productId) {
-        return productService.getProduct(productId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+        return productService.getProduct(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/product/{id}")
