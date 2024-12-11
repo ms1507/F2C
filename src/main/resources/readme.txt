@@ -1,3 +1,6 @@
+
+Sql command generated first time:
+
 create table orders (
         order_id bigint not null auto_increment,
         customer_id varchar(255) not null,
