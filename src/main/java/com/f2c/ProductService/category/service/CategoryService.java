@@ -1,10 +1,8 @@
-package com.f2c.ProductService.service;
+package com.f2c.ProductService.category.service;
 
-import com.f2c.ProductService.model.Category;
-import com.f2c.ProductService.repository.CategoryRepository;
+import com.f2c.ProductService.category.model.Category;
+import com.f2c.ProductService.category.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;

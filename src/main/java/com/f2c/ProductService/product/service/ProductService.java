@@ -1,7 +1,7 @@
-package com.f2c.ProductService.service;
+package com.f2c.ProductService.product.service;
 
-import com.f2c.ProductService.model.Product;
-import com.f2c.ProductService.repository.ProductRepository;
+import com.f2c.ProductService.product.model.Product;
+import com.f2c.ProductService.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

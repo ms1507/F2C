@@ -1,7 +1,7 @@
-package com.f2c.ProductService.controller;
+package com.f2c.ProductService.category.controller;
 
-import com.f2c.ProductService.model.Category;
-import com.f2c.ProductService.service.CategoryService;
+import com.f2c.ProductService.category.model.Category;
+import com.f2c.ProductService.category.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.f2c.ProductService.model;
+package com.f2c.ProductService.product.model;
 
 import jakarta.persistence.*;
 

@@ -1,6 +1,6 @@
-package com.f2c.ProductService.repository;
+package com.f2c.ProductService.product.repository;
 
-import com.f2c.ProductService.model.Product;
+import com.f2c.ProductService.product.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,6 @@
-package com.f2c.ProductService.model;
+package com.f2c.ProductService.category.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 
 
 @Entity
