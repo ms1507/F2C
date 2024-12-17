@@ -1,8 +1,10 @@
 package com.f2c.OrderService.controller;
 
+import com.f2c.OrderService.dto.OrderRequest;
 import com.f2c.OrderService.model.Order;
 import com.f2c.OrderService.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +27,9 @@ public class OrderController {
     }
 
     @PostMapping("/order")
-    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-        return ResponseEntity.ok(orderService.saveOrder(order));
+    public ResponseEntity<Order> placeOrder(@RequestBody OrderRequest orderRequest) {
+        Order order = orderService.placeOrder(orderRequest.getOrder(), orderRequest.getProductIds());
+        return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
 
     @PutMapping("/order/{id}")

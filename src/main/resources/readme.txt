@@ -14,3 +14,22 @@ create table orders (
         shipping_address varchar(255) not null,
         primary key (order_id)
     )
+
+
+
+    Request payload:
+
+    {
+      "order": {
+        "customerId": 1,
+        "deliveryDate": "2024-12-12T10:00:00",
+        "deliveryStatus": "Pending",
+        "description": "Order for farm equipment",
+        "orderDate": "2024-12-11T10:00:00",
+        "orderTotal": 5000,
+        "paymentMode": "Credit Card",
+        "paymentType": "Online",
+        "shippingAddress": "123 Farm Lane, Ruralville"
+      },
+      "productIds": [101, 102, 103]
+    }

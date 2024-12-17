@@ -1,17 +1,36 @@
 package com.f2c.OrderService.service;
 
+import com.f2c.OrderService.configuration.ProductOrderConfigurationProperties;
 import com.f2c.OrderService.model.Order;
 import com.f2c.OrderService.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    private final RestTemplate restTemplate;
+    ProductOrderConfigurationProperties productOrderConfigurationProperties;
+
+
+    public OrderService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    public OrderService(OrderRepository orderRepository, RestTemplate restTemplate, ProductOrderConfigurationProperties productOrderConfigurationProperties) {
+        this.orderRepository = orderRepository;
+        this.restTemplate = restTemplate;
+        this.productOrderConfigurationProperties = productOrderConfigurationProperties;
+    }
 
     public List<Order> getOrders() {
         return orderRepository.findAll();
@@ -21,8 +40,24 @@ public class OrderService {
         return orderRepository.findById(id).orElse(null);
     }
 
-    public Order saveOrder(Order order) {
-        return orderRepository.save(order);
+    @Transactional
+    public Order placeOrder(Order order, List<Long> productIds) {
+        try {
+            // Call ProductService to fetch product details by IDs
+            List products = restTemplate.getForObject(productOrderConfigurationProperties.getUrl() + "?productIds=" + String.join(",", productIds.stream().map(String::valueOf).collect(Collectors.toList())), List.class);
+
+            if (products == null || products.isEmpty()) {
+                throw new RuntimeException("Products not found");
+            }
+
+            // Set the products in the order
+//            order.setProducts(products);
+
+            // Save and return the order
+            return orderRepository.save(order);
+        } catch (HttpClientErrorException e) {
+            throw new RuntimeException("Failed to fetch product details: " + e.getMessage());
+        }
     }
 
     public Order updateOrder(Long orderId, Order updatedOrder) {
@@ -47,4 +82,6 @@ public class OrderService {
             orderRepository.deleteById(orderId);
         }
     }
+
+
 }
