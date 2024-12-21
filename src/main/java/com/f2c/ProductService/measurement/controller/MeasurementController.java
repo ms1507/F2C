@@ -18,28 +18,28 @@ public class MeasurementController {
     @GetMapping("/measurements")
     public ResponseEntity<List<Measurement>> getMeasurements() {
 
-        return ResponseEntity.ok(measurementService.getAllMeasurements());
+        return ResponseEntity.ok(measurementService.fetchAllMeasurements());
     }
 
-    @GetMapping("/category/{id}")
-    public ResponseEntity<Measurement> getCategory(@PathVariable Long id) {
+    @GetMapping("/measurement/{id}")
+    public ResponseEntity<Measurement> getMeasurement(@PathVariable Long id) {
         return measurementService.getMeasurementById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/category/{id}")
-    public ResponseEntity<Measurement> updateCategory(@PathVariable Long id, @RequestBody Measurement updatedCategory) {
-        return ResponseEntity.ok(measurementService.updateMeasurementById(id, updatedCategory));
+    @PutMapping("/measurement/{id}")
+    public ResponseEntity<Measurement> updateMeasurement(@PathVariable Long id, @RequestBody Measurement updatedMeasurement) {
+        return ResponseEntity.ok(measurementService.updateMeasurementById(id, updatedMeasurement));
     }
-    
-    @PostMapping("/category")
-    public ResponseEntity<Measurement> createCategory(@RequestBody Measurement measurement) {
-        return ResponseEntity.ok(measurementService.createMeasurement(measurement));
+
+    @PostMapping("/measurement")
+    public ResponseEntity<Measurement> createMeasurement(@RequestBody Measurement measurement) {
+        return ResponseEntity.ok(measurementService.saveMeasurement(measurement));
     }
-    
-        @DeleteMapping("/category/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+
+    @DeleteMapping("/measurement/{id}")
+    public ResponseEntity<Void> deleteMeasurement(@PathVariable Long id) {
         measurementService.getMeasurementById(id)
-            .ifPresent(category -> measurementService.deleteMeasurement(id));
+                .ifPresent(measurement -> measurementService.deleteMeasurement(id));
         return ResponseEntity.noContent().build();
     }
 }

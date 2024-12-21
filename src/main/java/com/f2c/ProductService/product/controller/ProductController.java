@@ -1,6 +1,6 @@
 package com.f2c.ProductService.product.controller;
 
-import com.f2c.ProductService.product.model.Product;
+import com.f2c.ProductService.product.model.ProductEntity;
 import com.f2c.ProductService.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,18 +37,18 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<Product>> getProducts() {
+    public ResponseEntity<List<ProductEntity>> getProducts() {
         return ResponseEntity.ok(productService.getProducts());
     }
 
     @GetMapping("/product/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+    public ResponseEntity<ProductEntity> getProductById(@PathVariable Long id) {
         return productService.getProduct(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/product/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long productId, @RequestBody Product updatedProduct) {
-        Product product = productService.updateProduct(productId, updatedProduct);
+    public ResponseEntity<ProductEntity> updateProduct(@PathVariable Long productId, @RequestBody ProductEntity updatedProduct) {
+        ProductEntity product = productService.updateProduct(productId, updatedProduct);
         if (product != null) {
             return ResponseEntity.ok(product);
         } else {
@@ -57,7 +57,7 @@ public class ProductController {
     }
 
     @PostMapping("/product")
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+    public ResponseEntity<ProductEntity> createProduct(@RequestBody ProductEntity product) {
         return ResponseEntity.ok(productService.createProduct(product));
     }
 
@@ -65,5 +65,10 @@ public class ProductController {
     public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {
         productService.deleteProduct(productId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/batch")
+    public List<ProductEntity> getProductsByIds(@RequestParam List<Long> productIds){
+        return productService.getProductsByIds(productIds);
     }
 }

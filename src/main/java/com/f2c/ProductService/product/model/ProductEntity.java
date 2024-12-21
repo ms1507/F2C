@@ -1,12 +1,13 @@
 package com.f2c.ProductService.product.model;
 
+import com.f2cUtility.common.model.Product;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "products")
-public class Product {
+public class ProductEntity extends Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

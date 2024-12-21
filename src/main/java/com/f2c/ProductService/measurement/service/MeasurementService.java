@@ -3,16 +3,18 @@ package com.f2c.ProductService.measurement.service;
 import com.f2c.ProductService.measurement.model.Measurement;
 import com.f2c.ProductService.measurement.repository.MeasurementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class MeasurementService {
 
     @Autowired
     private MeasurementRepository measurementRepository;
 
-    public List<Measurement> getAllMeasurements() {
+    public List<Measurement> fetchAllMeasurements() {
         return measurementRepository.findAll();
     }
 
@@ -28,7 +30,7 @@ public class MeasurementService {
         }).orElseThrow(() -> new RuntimeException("No Measurement found for updation.."));
     }
 
-    public Measurement createMeasurement(Measurement measurement) {
+    public Measurement saveMeasurement(Measurement measurement) {
         return measurementRepository.save(measurement);
     }
 

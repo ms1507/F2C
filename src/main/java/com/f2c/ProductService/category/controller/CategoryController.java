@@ -12,13 +12,13 @@ import java.util.List;
 @RequestMapping("/products")
 public class CategoryController {
 
-    @Autowired
+    @Autowired(required = true)
     CategoryService categoryService;
 
     @GetMapping("/categoryies")
     public ResponseEntity<List<Category>> getCategories() {
 
-        return ResponseEntity.ok(categoryService.getAllCategories());
+        return ResponseEntity.ok(categoryService.fetchAllCategories());
     }
 
     @GetMapping("/category/{id}")
@@ -28,18 +28,18 @@ public class CategoryController {
 
     @PutMapping("/category/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category updatedCategory) {
-        return ResponseEntity.ok(categoryService.updateCategoryById(id, updatedCategory));
+        return ResponseEntity.ok(categoryService.modifyCategoryById(id, updatedCategory));
     }
     
     @PostMapping("/category")
     public ResponseEntity<Category> createCategory(@RequestBody Category category) {
-        return ResponseEntity.ok(categoryService.createCategory(category));
+        return ResponseEntity.ok(categoryService.addCategory(category));
     }
     
         @DeleteMapping("/category/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
         categoryService.getCategoryById(id)
-            .ifPresent(category -> categoryService.deleteCategory(id));
+            .ifPresent(category -> categoryService.removeCategory(id));
         return ResponseEntity.noContent().build();
     }
 }
