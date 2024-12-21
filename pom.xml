@@ -64,9 +64,9 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.com.f2c-common-utility</groupId>
-			<artifactId>F2cUtility</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>com.f2cUtility</groupId>
+			<artifactId>f2c-common</artifactId>
+			<version>1.0</version>
 		</dependency>
 	</dependencies>
 

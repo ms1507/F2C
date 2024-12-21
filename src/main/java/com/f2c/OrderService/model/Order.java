@@ -1,8 +1,11 @@
 package com.f2c.OrderService.model;
 
+import com.f2cUtility.common.model.Product;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -36,6 +39,16 @@ public class Order {
 
     @Column(nullable = false)
     private String customerId;
+
+    //    Maintain Many to Many relationship between Products and Orders Tables. Create separate table named "order_product" with product_id and order_id columns.
+    @ManyToMany
+    @JoinTable(
+            name = "order_product",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+
+    private List<Product> products = new ArrayList();
 
     public Order() {
     }

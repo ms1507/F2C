@@ -1,8 +1,10 @@
 package com.f2c.OrderService.service;
 
 import com.f2c.OrderService.configuration.ProductOrderConfigurationProperties;
+import com.f2c.OrderService.dto.OrderRequest;
 import com.f2c.OrderService.model.Order;
 import com.f2c.OrderService.repository.OrderRepository;
+import com.f2cUtility.common.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +13,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.f2cUtility.common.model.Product;
 
 @Service
 public class OrderService {
@@ -41,20 +45,22 @@ public class OrderService {
     }
 
     @Transactional
-    public Order placeOrder(Order order, List<Long> productIds) {
+    public Order placeOrder(OrderRequest orderRequest, List<Long> productIds) {
+        Order order = orderRequest.getOrder();
         try {
             // Call ProductService to fetch product details by IDs
-            List products = restTemplate.getForObject(productOrderConfigurationProperties.getUrl() + "?productIds=" + String.join(",", productIds.stream().map(String::valueOf).collect(Collectors.toList())), List.class);
+            List<Product> products = restTemplate.getForObject(productOrderConfigurationProperties.getUrl() + "?productIds=" + String.join(",", productIds.stream().map(String::valueOf).collect(Collectors.toList())), List.class);
 
             if (products == null || products.isEmpty()) {
                 throw new RuntimeException("Products not found");
             }
 
             // Set the products in the order
-//            order.setProducts(products);
+            orderRequest.setProducts(productIds);
 
             // Save and return the order
             return orderRepository.save(order);
+
         } catch (HttpClientErrorException e) {
             throw new RuntimeException("Failed to fetch product details: " + e.getMessage());
         }
