@@ -3,13 +3,15 @@ package com.f2c.OrderService.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "order_product_details")
+@Table(name = "order_product")
 public class OrderProductDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "order_id")
     private Long orderId;
+    @Column(name = "product_id")
     private Long productId;
     private int quantity;
     private double discount;

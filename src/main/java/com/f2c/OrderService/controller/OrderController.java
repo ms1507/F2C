@@ -3,6 +3,8 @@ package com.f2c.OrderService.controller;
 import com.f2c.OrderService.dto.OrderRequest;
 import com.f2c.OrderService.model.Order;
 import com.f2c.OrderService.service.OrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,9 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    Logger logger = LoggerFactory.getLogger(OrderController.class);
+
+
     @GetMapping
     public ResponseEntity<List<Order>> getOrders() {
         return ResponseEntity.ok(orderService.getOrders());
@@ -27,14 +32,16 @@ public class OrderController {
     }
 
     @PostMapping("/order")
-    public ResponseEntity<Order> placeOrder(@RequestBody OrderRequest orderRequest) {
-        Order order = orderService.placeOrder(orderRequest, orderRequest.getProducts());
-        return ResponseEntity.status(HttpStatus.CREATED).body(order);
+    public ResponseEntity<OrderRequest> placeOrder(@RequestBody OrderRequest orderRequest) {
+        logger.info("Received Place Order request: {}", orderRequest);
+        orderService.placeOrder(orderRequest, orderRequest.getProducts());
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderRequest);
     }
 
     @PutMapping("/order/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody Order order) {
-        return ResponseEntity.ok(orderService.updateOrder(id, order));
+    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody OrderRequest orderRequest) {
+        logger.info("Received update order request: {}", orderRequest);
+        return ResponseEntity.ok(orderService.updateOrder(id, orderRequest));
     }
 
     @DeleteMapping("/order/{id}")

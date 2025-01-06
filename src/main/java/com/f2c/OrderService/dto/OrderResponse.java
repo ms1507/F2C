@@ -7,14 +7,25 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class OrderRequest {
+public class OrderResponse {
+    private Long orderId;
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
     private Order order;
     private List<Product> products;
 
-    public OrderRequest() {
+    public OrderResponse() {
     }
 
-    public OrderRequest(Order order, List<Product> productIds) {
+    public OrderResponse(Long orderId, Order order, List<Product> productIds) {
+        this.orderId = orderId;
         this.order = order;
         this.products = productIds;
     }

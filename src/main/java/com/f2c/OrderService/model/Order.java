@@ -12,6 +12,7 @@ import java.util.List;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
     private Long orderId;
 
     private String description;
@@ -41,7 +42,7 @@ public class Order {
     private String customerId;
 
     //    Maintain Many to Many relationship between Products and Orders Tables. Create separate table named "order_product" with product_id and order_id columns.
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "order_product",
             joinColumns = @JoinColumn(name = "order_id"),
