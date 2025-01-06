@@ -12,9 +12,6 @@ import java.time.LocalDateTime;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false)
     private Long userId;
 
     @Column(nullable = false)
@@ -39,6 +36,5 @@ public class User {
     @Column(nullable = false, length = 1000)
     private String address;
 
-    @Column(nullable = false)
     private LocalDateTime birthDate;
 }

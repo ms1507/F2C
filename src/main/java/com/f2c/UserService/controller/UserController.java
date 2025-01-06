@@ -21,12 +21,12 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<User> getUserById(HttpServletRequest request, Long id) {
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
         return userService.getUser(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<User> updateUser(HttpServletRequest request, Long id, User user) {
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
         return userService.getUser(id).map(u -> {
             u.setUserName(user.getUserName());
             u.setEmail(user.getEmail());
@@ -38,12 +38,12 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity<User> createUser(HttpServletRequest request, User user) {
+    public ResponseEntity<User> createUser(@RequestBody User user) {
         return ResponseEntity.ok(userService.saveUser(user));
     }
 
     @DeleteMapping("/users/{id}")
-    public ResponseEntity<Void> deleteUser(HttpServletRequest request, Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
