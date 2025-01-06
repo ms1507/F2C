@@ -2,6 +2,8 @@ package com.f2c.ProductService.measurement.controller;
 
 import com.f2c.ProductService.measurement.service.MeasurementService;
 import com.f2c.ProductService.measurement.model.Measurement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +17,11 @@ public class MeasurementController {
     @Autowired
     MeasurementService measurementService;
 
+    Logger logger = LoggerFactory.getLogger(MeasurementController.class);
+
     @GetMapping("/measurements")
     public ResponseEntity<List<Measurement>> getMeasurements() {
-
+        logger.info("Received request to Fetch all Measurements...!!");
         return ResponseEntity.ok(measurementService.fetchAllMeasurements());
     }
 
@@ -33,6 +37,7 @@ public class MeasurementController {
 
     @PostMapping("/measurement")
     public ResponseEntity<Measurement> createMeasurement(@RequestBody Measurement measurement) {
+        logger.info("Received request to create Measurement...!!");
         return ResponseEntity.ok(measurementService.saveMeasurement(measurement));
     }
 

@@ -1,7 +1,7 @@
 package com.f2c.ProductService.product.service;
 
-import com.f2c.ProductService.product.model.ProductEntity;
 import com.f2c.ProductService.product.repository.ProductRepository;
+import com.f2cUtility.common.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,20 +15,20 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-    public Optional<ProductEntity> getProduct(Long productId) {
+    public Optional<Product> getProduct(Long productId) {
         return productRepository.findById(productId);
     }
 
-    public List<ProductEntity> getProducts() {
+    public List<Product> getProducts() {
         return productRepository.findAll();
     }
 
-    public ProductEntity createProduct(ProductEntity product) {
+    public Product createProduct(Product product) {
         product.setCreatedAt(LocalDateTime.now());
         return productRepository.save(product);
     }
 
-    public ProductEntity updateProduct(Long id, ProductEntity updatedProduct) {
+    public Product updateProduct(Long id, Product updatedProduct) {
         return productRepository.findById(id).map(existingProduct -> {
             existingProduct.setProductName(updatedProduct.getProductName());
             existingProduct.setCategoryId(updatedProduct.getCategoryId());
@@ -44,7 +44,7 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public List<ProductEntity> getProductsByIds(List<Long> ids){
+    public List<Product> getProductsByIds(List<Long> ids){
         return productRepository.findAllById(ids);
     }
 
